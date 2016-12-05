@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<title>Drinks Database</title>
+</head>
+
+<body class="container">
+	<h1>Drinks Database</h1>
+
+	<div id="PersonForm" style="margin-top:50px"
+		 class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+		<div class="panel panel-info">
+			<div class="panel-body">
+				<form id="form" class="form-horizontal" role="form" action="/create" method="post">
+					<div class="form-group">
+						<label for="PersonFname" class="col-md-3 control-label">First Name</label>
+						<div class="col-md-9">
+							<input type="text" id="PersonFname" class="form-control" name="PersonFname"
+								   placeholder="Your first name">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="PersonLname" class="col-md-3 control-label">Last Name</label>
+						<div class="col-md-9">
+							<input type="text" id="PersonLname" class="form-control" name="PersonLname"
+								   placeholder="Your last name">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="PersonDOB" class="col-md-3 control-label">Date of Birth</label>
+						<div class="col-md-9">
+							<input type="date" id="PersonDOB" class="form-control" name="PersonDOB">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-1 col-md-12">
+							<button id="btn-PersonsSubmit" type="submit" class="btn btn-info">
+								<i class="icon-hand-right"></i>Submit</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<button id="btn-showAllPersons" type="submit" class="btn btn-info"><i class="icon-hand-right">
+		</i>Show All Persons</button>
+	</div>
+
+	<div class="container">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>PersonID</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Date of Birth</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody id="resultsTable">
+			</tbody>
+		</table>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="/js/persons.js"></script>
+</body>
+
+</html>
