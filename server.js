@@ -99,6 +99,13 @@ function deletePerson(PersonID) {
   return new sql.Request().query(query);
 }
 
+function deleteDrink(DrinkID) {
+  console.log("Deleting Drink");
+  var query = "DELETE FROM dbo.DRINK WHERE DrinkID=" + DrinkID;
+  console.log(query);
+  return new sql.Request().query(query);
+}
+
 function getPersonObject(PersonID) {
     return new sql.Request().query('SELECT * FROM dbo.PERSON WHERE PersonID =' + PersonID);
 }
@@ -167,6 +174,22 @@ function makeRouter() {
   app.get('/deletePerson', function (req, res) {
     deletePerson(PersonID).then(function () {
       console.log(req.PersonID);
+      res.redirect('/')
+    }).catch(function (err) {
+      console.log(err);
+    });
+  })
+
+  app.get("/deleteDrink/:DrinkID", function(req, res) {
+    var DrinkID = req.params.DrinkID;
+    deleteDrink(DrinkID).then(function(data) {
+      res.redirect('/')
+    })
+  })
+  
+  app.get('/deleteDrink', function (req, res) {
+    deleteDrink(DrinkID).then(function () {
+      console.log(req.DrinkID);
       res.redirect('/')
     }).catch(function (err) {
       console.log(err);

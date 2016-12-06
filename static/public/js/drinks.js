@@ -36,5 +36,5 @@ function editDrink(DrinkID) {
 
 function deleteDrink(DrinkID) {
   console.log("Delete Drink");
-  window.location.href = "/delete/" + DrinkID;
+  window.location.href = "/deleteDrink/" + DrinkID;
 }
