@@ -22,25 +22,26 @@ function getPass() {
 
 function connectToDb() {
   var config = {
-    user: 'Info340',
+    user: 'Info445',
     password: getPass(),
     server: 'is-hay04.ischool.uw.edu',
-    database: 'MS_DRINK_DB'
+    //need to put in the database! 
+    database: 'WeedWorld'
   }
   return sql.connect(config)
 }
 
 function displayAllPersons() {
-  console.log("displaying top 1000 Persons");
-  return new sql.Request().query('SELECT TOP 1000 * FROM dbo.PERSON ORDER BY PersonID DESC');
+  console.log("displaying top 1000 Customer");
+  return new sql.Request().query('SELECT TOP 1000 * FROM dbo.Customer ORDER BY CustomerID DESC');
 }
 
 /*
-Returns the top 1000 drinks in the DB
+Returns the top 1000 Weeds in the DB
 */
-function displayAllDrinks() {
-  console.log("displaying top 1000 Drinks");
-  return new sql.Request().query('SELECT TOP 1000 * FROM dbo.DRINK ORDER BY DrinkID DESC');
+function displayAllWeeds() {
+  console.log("displaying top 1000 Product");
+  return new sql.Request().query('SELECT TOP 1000 * FROM dbo.Product ORDER BY ProductID DESC');
 }
 
 function displayAllEvents() {
@@ -49,17 +50,17 @@ function displayAllEvents() {
 }
 
 function updatePerson(PersonID, PersonFname, PersonLname, PersonDOB) {
-  console.log("Updating Person");
-  var query = "UPDATE dbo.PERSON SET PersonFname='" + PersonFname + "', PersonLname='"
-      + PersonLname + "', PersonDOB='" + PersonDOB +  "' WHERE PersonID=" + PersonID;
+  console.log("Updating Customer");
+  var query = "UPDATE dbo.Customer SET Fname='" + PersonFname + "', Lname='"
+      + PersonLname + "', DOB='" + PersonDOB +  "' WHERE PersonID=" + PersonID;
   console.log(query);
   return new sql.Request().query(query);
 }
 
-function updateDrink(DrinkID, DrinkName, DrinkDesc) {
-  console.log("Updating Drink");
-  var query = "UPDATE dbo.DRINK SET DrinkName='" + DrinkName + "', DrinkDesc='"
-      + DrinkDesc +  "' WHERE DrinkID=" + DrinkID;
+function updateWeed(WeedID, WeedName, WeedDesc) {
+  console.log("Updating Weed");
+  var query = "UPDATE dbo.Weed SET WeedName='" + WeedName + "', WeedDesc='"
+      + WeedDesc +  "' WHERE WeedID=" + WeedID;
   console.log(query);
   return new sql.Request().query(query);
 }
@@ -70,18 +71,18 @@ function createPerson(PersonFname, PersonLname, PersonDOB) {
     .input('Fname', sql.VarChar(30), PersonFname)
     .input('Lname', sql.VarChar(30), PersonLname)
     .input('DOB', sql.Date(), PersonDOB)
-    .execute('dbo.uspNewPerson')
+    .execute('dbo.up_PopulateCustomers')
 }
 
-function createDrink(DrinkName, DrinkDesc) {
-  console.log("Creating Drink");
+function createWeed(WeedName, WeedDesc) {
+  console.log("Creating Weed");
   return new sql.Request()
-    .input('DrinkName', sql.VarChar(30), DrinkName)
-    .input('DrinkDesc', sql.VarChar(30), DrinkDesc)
-    .execute('dbo.uspNewDrink')
+    .input('WeedName', sql.VarChar(30), WeedName)
+    .input('WeedDesc', sql.VarChar(30), WeedDesc)
+    .execute('dbo.us_PoplateEmployees')
 }
 
-function createEvent(EventType, DrinkName, Quantity, Time, Fridge, TeamPersonID) {
+function createEvent(EventType, WeedName, Quantity, Time, Fridge, TeamPersonID) {
   console.log("Creating Event");
   return new sql.Request()
     .input('EventTypeName', sql.VarChar(30), EventType)
@@ -99,9 +100,9 @@ function deletePerson(PersonID) {
   return new sql.Request().query(query);
 }
 
-function deleteDrink(DrinkID) {
-  console.log("Deleting Drink");
-  var query = "DELETE FROM dbo.DRINK WHERE DrinkID=" + DrinkID;
+function deleteWeed(WeedID) {
+  console.log("Deleting Weed");
+  var query = "DELETE FROM dbo.Weed WHERE WeedID=" + WeedID;
   console.log(query);
   return new sql.Request().query(query);
 }
@@ -110,8 +111,8 @@ function getPersonObject(PersonID) {
     return new sql.Request().query('SELECT * FROM dbo.PERSON WHERE PersonID =' + PersonID);
 }
 
-function getDrinkObject(DrinkID) {
-    return new sql.Request().query('SELECT * FROM dbo.DRINK WHERE DrinkID =' + DrinkID);
+function getWeedObject(WeedID) {
+    return new sql.Request().query('SELECT * FROM dbo.Weed WHERE WeedID =' + WeedID);
 }
 
 //ROUTES
@@ -129,8 +130,8 @@ function makeRouter() {
     });
   })
 
-  app.get('/Drinks/all', function (req, res) {
-    displayAllDrinks().then(function (data) {
+  app.get('/Weeds/all', function (req, res) {
+    displayAllWeeds().then(function (data) {
       return res.json(data);
     });
   })
@@ -145,8 +146,8 @@ function makeRouter() {
     res.sendFile('/static/views/editPerson.html', { root: __dirname })
   })
 
-  app.get('/editDrink/:DrinkID', function (req, res) {
-    res.sendFile('/static/views/editDrink.html', { root: __dirname })
+  app.get('/editWeed/:WeedID', function (req, res) {
+    res.sendFile('/static/views/editWeed.html', { root: __dirname })
   })
   
   app.get("/getPerson/:PersonID", function(req, res) {
@@ -157,10 +158,10 @@ function makeRouter() {
     })
   })
 
-  app.get("/getDrink/:DrinkID", function(req, res) {
-    var DrinkID = req.params.DrinkID;
-    console.log(DrinkID);
-    getDrinkObject(DrinkID).then(function(data) {
+  app.get("/getWeed/:WeedID", function(req, res) {
+    var WeedID = req.params.WeedID;
+    console.log(WeedID);
+    getWeedObject(WeedID).then(function(data) {
       return res.json(data);
     })
   })
@@ -180,16 +181,16 @@ function makeRouter() {
     });
   })
 
-  app.get("/deleteDrink/:DrinkID", function(req, res) {
-    var DrinkID = req.params.DrinkID;
-    deleteDrink(DrinkID).then(function(data) {
+  app.get("/deleteWeed/:WeedID", function(req, res) {
+    var WeedID = req.params.WeedID;
+    deleteWeed(WeedID).then(function(data) {
       res.redirect('/')
     })
   })
   
-  app.get('/deleteDrink', function (req, res) {
-    deleteDrink(DrinkID).then(function () {
-      console.log(req.DrinkID);
+  app.get('/deleteWeed', function (req, res) {
+    deleteWeed(WeedID).then(function () {
+      console.log(req.WeedID);
       res.redirect('/')
     }).catch(function (err) {
       console.log(err);
@@ -211,13 +212,13 @@ function makeRouter() {
     });
   })
 
-  app.post('/createDrink', function (req, res) {
+  app.post('/createWeed', function (req, res) {
     connectToDb().then(function () {
-      var DrinkID = req.body.DrinkID;
-      var DrinkName = req.body.DrinkName;
-      var DrinkDesc = req.body.DrinkDesc;
+      var WeedID = req.body.WeedID;
+      var WeedName = req.body.WeedName;
+      var WeedDesc = req.body.WeedDesc;
 
-      createDrink(DrinkName, DrinkDesc).then(function () {
+      createWeed(WeedName, WeedDesc).then(function () {
         res.redirect('/')
       }).catch(function (err) {
         console.log(err);
@@ -228,13 +229,13 @@ function makeRouter() {
     app.post('/createEvent', function (req, res) {
     connectToDb().then(function () {
       var EventType = req.body.EventType;
-      var DrinkName = req.body.DrinkName;
+      var WeedName = req.body.WeedName;
       var Quantity = req.body.Quantity;
       var Time = req.body.Time;
       var Fridge = req.body.Fridge;
       var TeamPersonID = req.body.TeamPersonID;
 
-      createEvent(EventType, DrinkName, Quantity, Time, Fridge, TeamPersonID).then(function () {
+      createEvent(EventType, WeedName, Quantity, Time, Fridge, TeamPersonID).then(function () {
         res.redirect('/')
       }).catch(function (err) {
         console.log(err);
@@ -256,12 +257,12 @@ function makeRouter() {
     });
   })
 
-  app.post('/DrinkSubmit', function (req, res) {
+  app.post('/WeedSubmit', function (req, res) {
     connectToDb().then(function () {
-      var DrinkID = req.body.DrinkID;
-      var DrinkName = req.body.DrinkName;
-      var DrinkDesc = req.body.DrinkDesc;
-      updateDrink(DrinkID, DrinkName, DrinkDesc).then(function() {
+      var WeedID = req.body.WeedID;
+      var WeedName = req.body.WeedName;
+      var WeedDesc = req.body.WeedDesc;
+      updateWeed(WeedID, WeedName, WeedDesc).then(function() {
           res.redirect('/')
       });
     }).catch(function (error) {
@@ -271,11 +272,11 @@ function makeRouter() {
 
   app.post('/submit', function (req, res) {
     connectToDb().then(function () {
-      var DrinkName = req.body.DrinkName;
-      var DrinkDesc = req.body.DrinkDesc;
-      console.log(DrinkName);
+      var WeedName = req.body.WeedName;
+      var WeedDesc = req.body.WeedDesc;
+      console.log(WeedName);
 
-      addCustomer(DrinkName, DrinkDesc).then(function () {
+      addCustomer(WeedName, DrinkDesc).then(function () {
         console.log(DrinkName);
         console.log("success");
         res.redirect('/account')

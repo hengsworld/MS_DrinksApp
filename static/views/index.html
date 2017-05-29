@@ -4,12 +4,12 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<title>Drinks Database</title>
+	<title>Weeds Database</title>
 </head>
 
 <body>
 <div class="container">
-	<h1>Drinks Database</h1>
+	<h1>Weeds Database</h1>
 
 	<!-- forms -->
 	<div class="container">
@@ -57,100 +57,41 @@
 			</div>
 
 			<!-- events form -->
-			<div id="EventForm" style="margin-top:50px"
+		
+			<!-- Weeds form -->
+			<div id="WeedForm" style="margin-top:50px"
 				 class="mainbox col-md-4">
-				 <h2>Event</h2>
+				 <h2>Weed</h2>
 				<div class="panel panel-info">
 					<div class="panel-body">
-						<form id="form" class="form-horizontal" role="form" action="/createEvent" method="post">
+						<form id="form" class="form-horizontal" role="form" action="/createWeed" method="post">
 							<div class="form-group">
-								<label for="EventType" class="col-md-3 control-label">Event Type</label>
+								<label for="WeedName" class="col-md-3 control-label">Weed Name</label>
 								<div class="col-md-9">
-									<input type="text" id="EventType" class="form-control" name="EventType"
-										   placeholder="'Added' or 'Removed'">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="Drink" class="col-md-3 control-label">Drink Name</label>
-								<div class="col-md-9">
-									<input type="text" id="Drink" class="form-control" name="Drink"
-										   placeholder="Sasta, Coke, etc">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="Quantity" class="col-md-3 control-label">Drink Quantity</label>
-								<div class="col-md-9">
-									<input type="number" id="Quantity" class="form-control" name="Quantity">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="Time" class="col-md-3 control-label">Time</label>
-								<div class="col-md-9">
-									<input type="text" id="Time" class="form-control" name="Time">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="Fridge" class="col-md-3 control-label">Fridge</label>
-								<div class="col-md-9">
-									<input type="text" id="Fridge" class="form-control" name="Fridge" placeholder="Big Fridge001">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="TeamPersonID" class="col-md-3 control-label">TeamPersonID</label>
-								<div class="col-md-9">
-									<input type="text" id="TeamPersonID" class="form-control" name="TeamPersonID">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="col-md-offset-1 col-md-12">
-									<button id="btn-EventSubmit" type="submit" class="btn btn-info">
-										<i class="icon-hand-right"></i>Add</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-				<button id="btn-showAllEvents" type="submit" class="btn btn-info"><i class="icon-hand-right">
-				</i>Show Top 1000 Events</button>
-			</div>
-
-			<!-- drinks form -->
-			<div id="DrinkForm" style="margin-top:50px"
-				 class="mainbox col-md-4">
-				 <h2>Drink</h2>
-				<div class="panel panel-info">
-					<div class="panel-body">
-						<form id="form" class="form-horizontal" role="form" action="/createDrink" method="post">
-							<div class="form-group">
-								<label for="DrinkName" class="col-md-3 control-label">Drink Name</label>
-								<div class="col-md-9">
-									<input type="text" id="DrinkName" class="form-control" name="DrinkName"
+									<input type="text" id="WeedName" class="form-control" name="WeedName"
 										   placeholder="'Shasta', 'Coke', 'Water', etc">
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label for="DrinkDesc" class="col-md-3 control-label">Drink Description</label>
+								<label for="WeedDesc" class="col-md-3 control-label">Weed Description</label>
 								<div class="col-md-9">
-									<input type="text" id="DrinkDesc" class="form-control" name="DrinkDesc"
+									<input type="text" id="WeedDesc" class="form-control" name="WeedDesc"
 										   placeholder="Optional description">
 								</div>
 							</div>
 
 							<div class="form-group">
 								<div class="col-md-offset-1 col-md-12">
-									<button id="btn-DrinksSubmit" type="submit" class="btn btn-info">
+									<button id="btn-WeedsSubmit" type="submit" class="btn btn-info">
 										<i class="icon-hand-right"></i>Add</button>
 								</div>
 							</div>
 						</form>
 					</div>
 				</div>
-				<button id="btn-showAllDrinks" type="submit" class="btn btn-info"><i class="icon-hand-right">
-				</i>Show Top 1000 Drinks</button>
+				<button id="btn-showAllWeeds" type="submit" class="btn btn-info"><i class="icon-hand-right">
+				</i>Show Top 1000 Weeds</button>
 			</div>
 		</div><!-- end row-->
 	</div><!-- end container -->
@@ -171,7 +112,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<script src="/js/persons.js"></script>
-	<script src="/js/drinks.js"></script>
+	<script src="/js/Weeds.js"></script>
 	<script src="/js/events.js"></script>
 </div>
 </body>
