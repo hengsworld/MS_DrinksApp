@@ -18,9 +18,10 @@ function getWeeds() {
         "<th>Edit</th><th>Delete</th>");
     $.each(data, function (ID, WeedObject) {
       var rowData = $('<tr></tr>');
-      rowData.append("<td>" + WeedObject.WeedID + "</td>");
-      rowData.append("<td>" + WeedObject.WeedName + "</td>");
-      rowData.append("<td>" + WeedObject.WeedDesc + "</td>");
+      rowData.append("<td>" + WeedObject.ProductID + "</td>");
+      rowData.append("<td>" + WeedObject.ProductTypeID + "</td>");
+      rowData.append("<td>" + WeedObject.ProductName + "</td>");
+      rowData.append("<td>" + WeedObject.ProductDesc + "</td>");
       rowData.append("<td><button type='submit' class='btn btn-info' onclick='editWeed("
           + WeedObject.WeedID + ")'>Edit</button></td>");
       rowData.append("<td><button type='submit' class='btn btn-info'onclick='deleteWeed("

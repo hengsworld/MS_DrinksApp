@@ -17,10 +17,10 @@ function getPersons() {
         "<th>Edit</th><th>Delete</th>");
     $.each(data, function (ID, PersonObject) {
       var rowData = $('<tr></tr>');
-      rowData.append("<td>" + PersonObject.PersonID + "</td>");
-      rowData.append("<td>" + PersonObject.PersonFname + "</td>");
-      rowData.append("<td>" + PersonObject.PersonLname + "</td>");
-      rowData.append("<td>" + PersonObject.PersonDOB + "</td>");
+      rowData.append("<td>" + PersonObject.CustomerID + "</td>");
+      rowData.append("<td>" + PersonObject.FName + "</td>");
+      rowData.append("<td>" + PersonObject.LName + "</td>");
+      rowData.append("<td>" + PersonObject.DOB + "</td>");
       rowData.append("<td><button type='submit' class='btn btn-info' onclick='editPerson("
           + PersonObject.PersonID + ")'>Edit</button></td>");
       rowData.append("<td><button type='submit' class='btn btn-info'onclick='deletePerson("

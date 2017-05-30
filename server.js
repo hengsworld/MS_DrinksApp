@@ -49,37 +49,38 @@ function displayAllEvents() {
   return new sql.Request().query('SELECT TOP 1000 * FROM dbo.EVENT ORDER BY EventID DESC');
 }
 
-function updatePerson(PersonID, PersonFname, PersonLname, PersonDOB) {
+function updatePerson(PersonID, Fname, Lname, DOB) {
   console.log("Updating Customer");
-  var query = "UPDATE dbo.Customer SET Fname='" + PersonFname + "', Lname='"
-      + PersonLname + "', DOB='" + PersonDOB +  "' WHERE PersonID=" + PersonID;
+  var query = "UPDATE dbo.Customer SET Fname='" + Fname + "', Lname='"
+      + Lname + "', DOB='" + DOB +  "' WHERE PersonID=" + ID;
   console.log(query);
   return new sql.Request().query(query);
 }
 
 function updateWeed(WeedID, WeedName, WeedDesc) {
   console.log("Updating Weed");
-  var query = "UPDATE dbo.Weed SET WeedName='" + WeedName + "', WeedDesc='"
+  var query = "UPDATE dbo.Product SET ProductName='" + WeedName + "', ProductDesc='"
       + WeedDesc +  "' WHERE WeedID=" + WeedID;
   console.log(query);
   return new sql.Request().query(query);
 }
 
-function createPerson(PersonFname, PersonLname, PersonDOB) {
+function create(Fname, Lname, DOB) {
   console.log("Creating Person");
   return new sql.Request()
-    .input('Fname', sql.VarChar(30), PersonFname)
-    .input('Lname', sql.VarChar(30), PersonLname)
-    .input('DOB', sql.Date(), PersonDOB)
+    .input('Fname', sql.VarChar(30), Fname)
+    .input('Lname', sql.VarChar(30), Lname)
+    .input('DOB', sql.Date(), DOB)
     .execute('dbo.up_PopulateCustomers')
 }
 
 function createWeed(WeedName, WeedDesc) {
   console.log("Creating Weed");
   return new sql.Request()
-    .input('WeedName', sql.VarChar(30), WeedName)
-    .input('WeedDesc', sql.VarChar(30), WeedDesc)
-    .execute('dbo.us_PoplateEmployees')
+    .input('ProductName', sql.VarChar(30), WeedName)
+    .input('productTypeName')
+    .input('ProductDesc', sql.VarChar(30), WeedDesc)
+    .execute('dbo.ne_registerProduct')
 }
 
 function createEvent(EventType, WeedName, Quantity, Time, Fridge, TeamPersonID) {
@@ -95,7 +96,7 @@ function createEvent(EventType, WeedName, Quantity, Time, Fridge, TeamPersonID) 
 
 function deletePerson(PersonID) {
   console.log("Deleting Person");
-  var query = "DELETE FROM dbo.PERSON WHERE PersonID=" + PersonID;
+  var query = "DELETE FROM dbo.Customer WHERE CustomerID=" + PersonID;
   console.log(query);
   return new sql.Request().query(query);
 }
@@ -108,11 +109,11 @@ function deleteWeed(WeedID) {
 }
 
 function getPersonObject(PersonID) {
-    return new sql.Request().query('SELECT * FROM dbo.PERSON WHERE PersonID =' + PersonID);
+    return new sql.Request().query('SELECT * FROM dbo.Customer WHERE CustomerID =' + PersonID);
 }
 
 function getWeedObject(WeedID) {
-    return new sql.Request().query('SELECT * FROM dbo.Weed WHERE WeedID =' + WeedID);
+    return new sql.Request().query('SELECT * FROM dbo.Product WHERE ProductID =' + WeedID);
 }
 
 //ROUTES
@@ -200,11 +201,11 @@ function makeRouter() {
   app.post('/createPerson', function (req, res) {
     connectToDb().then(function () {
       var PersonID = req.body.PersonID;
-      var PersonFname = req.body.PersonFname;
-      var PersonLname = req.body.PersonLname;
-      var PersonDOB = req.body.PersonDOB;
+      var Fname = req.body.Fname;
+      var Lname = req.body.Lname;
+      var DOB = req.body.DOB;
 
-      createPerson(PersonFname, PersonLname, PersonDOB).then(function () {
+      createPerson(Fname, Lname, DOB).then(function () {
         res.redirect('/')
       }).catch(function (err) {
         console.log(err);
@@ -244,12 +245,13 @@ function makeRouter() {
   })
 
   app.post('/PersonSubmit', function (req, res) {
+    console.log('saysomething');
     connectToDb().then(function () {
-      var PersonID = req.body.PersonID;
-      var PersonFname = req.body.PersonFname;
-      var PersonLname = req.body.PersonLname;
-      var PersonDOB = req.body.PersonDOB;
-      updatePerson(PersonID, PersonFname, PersonLname, PersonDOB).then(function() {
+      var CustomerID = req.body.CustomerID;
+      var Fname = req.body.Fname;
+      var Lname = req.body.Lname;
+      var DOB = req.body.DOB;
+      updatePerson(CustomerID, Fname, Lname, DOB).then(function() {
           res.redirect('/')
       });
     }).catch(function (error) {
@@ -292,6 +294,7 @@ function makeRouter() {
 
 function startParty() {
   connectToDb().then(() => {
+    console.log("connected to db");
     makeRouter();
     app.listen(process.env.PORT || 3000);
   })

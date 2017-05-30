@@ -8,11 +8,12 @@ $(document).ready(function () {
 })
 
 function getPersonObject(PersonID) {
+	console.log(PersonID)
 	$.getJSON("/getPerson/" + PersonID, function (data) {
 		var PersonObject = data[0];
-		$("#CustomerID").val(PersonObject.PersonID);
-		$("#Fname").val(PersonObject.PersonFname);
-		$("#Lname").val(PersonObject.PersonLname);
-		$("#DOB").val(PersonObject.PersonDOB);
+		$("#CustomerID").val(PersonObject.CustomerID);
+		$("#Fname").val(PersonObject.Fname);
+		$("#Lname").val(PersonObject.Lname);
+		$("#DOB").val(PersonObject.DOB);
 	});
 }
